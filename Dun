@@ -1,0 +1,118 @@
+if not game:IsLoaded() then game.Loaded:Wait() end
+repeat task.wait() until game.Players.LocalPlayer
+
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+local RunService = game:GetService("RunService")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local CoreGui = game:GetService("CoreGui")
+local Workspace = game:GetService("Workspace")
+local HttpService = game:GetService("HttpService")
+local TeleportService = game:GetService("TeleportService")
+local VirtualUser = game:GetService("VirtualUser")
+
+local LocalPlayer = Players.LocalPlayer
+
+local Config = {
+    Speed = 300,  -- Tốc độ bay
+    AutoBuyRandom = true,  --100% Legendary Fruit  Random
+    AutoStore = true,  -- Cất trái
+    HopIfNoFruit = true,  -- Hop server sau 7 giây
+    EnableESP = true,  -- ESP
+    Team = "Pirates"  -- Phe 
+}
+
+local ScreenGui = Instance.new("ScreenGui")
+local MainFrame = Instance.new("Frame")
+local TitleLabel = Instance.new("TextLabel")
+local TimeLabel = Instance.new("TextLabel")
+local StatusLabel = Instance.new("TextLabel")
+local UIPadding = Instance.new("UIPadding")
+local UIListLayout = Instance.new("UIListLayout")
+
+ScreenGui.Name = "Dundat"
+if CoreGui:FindFirstChild("DUNFruits") then
+    CoreGui.DUNFindFruits:Destroy()
+end
+if gethui then
+    ScreenGui.Parent = gethui()
+elseif game:GetService("CoreGui") then
+    ScreenGui.Parent = game:GetService("CoreGui")
+else
+    ScreenGui.Parent = LocalPlayer.PlayerGui
+end
+ScreenGui.ResetOnSpawn = false
+ScreenGui.IgnoreGuiInset = true 
+
+local Background = Instance.new("Frame")
+Background.Name = "Background"
+Background.Parent = ScreenGui
+Background.Size = UDim2.new(1, 0, 1, 0)
+Background.Position = UDim2.new(0, 0, 0, 0)
+Background.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+Background.BackgroundTransparency = 0.5
+Background.BorderSizePixel = 0
+
+MainFrame.Name = "MainFrame"
+MainFrame.Parent = Background 
+MainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
+MainFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+MainFrame.BackgroundTransparency = 1.000 
+MainFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
+MainFrame.Size = UDim2.new(0, 800, 0, 300)
+
+UIListLayout.Parent = MainFrame
+UIListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+UIListLayout.Padding = UDim.new(0, 15) 
+
+UIPadding.Parent = MainFrame
+UIPadding.PaddingTop = UDim.new(0, 20)
+UIPadding.PaddingBottom = UDim.new(0, 20)
+
+TitleLabel.Name = "TitleLabel"
+TitleLabel.Parent = MainFrame
+TitleLabel.BackgroundTransparency = 1.000
+TitleLabel.Size = UDim2.new(1, 0, 0, 60)
+TitleLabel.Font = Enum.Font.FredokaOne
+TitleLabel.Text = "DUN Hub - Finder Fruits"
+TitleLabel.TextColor3 = Color3.fromRGB(255, 0, 0)
+TitleLabel.TextSize = 50
+TitleLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+TitleLabel.TextStrokeTransparency = 0.3
+
+StatusLabel.Name = "StatusLabel"
+StatusLabel.Parent = MainFrame
+StatusLabel.BackgroundTransparency = 1.000
+StatusLabel.Size = UDim2.new(1, 0, 0, 40)
+StatusLabel.Font = Enum.Font.GothamBold
+StatusLabel.Text = "Status : DUN HUB"
+StatusLabel.TextColor3 = Color3.fromRGB(255, 0, 0)
+StatusLabel.TextSize = 28
+StatusLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+StatusLabel.TextStrokeTransparency = 0.5
+
+local InfoLabel = Instance.new("TextLabel")
+InfoLabel.Name = "InfoLabel"
+InfoLabel.Parent = MainFrame
+InfoLabel.BackgroundTransparency = 1.000
+InfoLabel.Size = UDim2.new(1, 0, 0, 35)
+InfoLabel.Font = Enum.Font.GothamBold
+InfoLabel.Text = "Tiktok: @dundat28"
+InfoLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+InfoLabel.TextSize = 22
+InfoLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+InfoLabel.TextStrokeTransparency = 0.5
+
+local function UpdateStatus(text)
+    StatusLabel.Text = "Status : " .. text
+end
+
+local function GetCharacter()
+    return LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+end
+
+local function GetRootPart()
+    local Char = GetCharacter()
+    return Char:WaitForChild("HumanoidRootPart", 10)
+e
